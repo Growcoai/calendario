@@ -14,8 +14,8 @@ document.addEventListener('DOMContentLoaded', () => {
     // Google Sheets CSV Export URL
     const SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/1TznppsHvwjgG23XZCQSRasZIK3sXt_Di/export?format=csv';
     
-    // Google Apps Script Web App URL (Placeholder to be updated later)
-    const GAS_WEB_APP_URL = '';
+    // Google Apps Script Web App URL
+    const GAS_WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbwoJzrcqLWO_XijDPWMTMNqmlQhkKdAQX0CS3nOc-28dR8N-vvXj3a6KpaxiZukhLyTLA/exec';
 
     // Hover animation for login background
     const loginBg = document.getElementById('login-bg-image');
