@@ -13,6 +13,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Google Sheets CSV Export URL
     const SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/1TznppsHvwjgG23XZCQSRasZIK3sXt_Di/export?format=csv';
+    
+    // Google Apps Script Web App URL (Placeholder to be updated later)
+    const GAS_WEB_APP_URL = '';
 
     // Hover animation for login background
     const loginBg = document.getElementById('login-bg-image');
@@ -42,6 +45,92 @@ document.addEventListener('DOMContentLoaded', () => {
         if (e.target === modal) {
             modal.classList.remove('active');
         }
+    });
+
+    // Feedback Modal Logic
+    const feedbackModal = document.getElementById('feedback-modal');
+    const closeFeedback = document.getElementById('close-feedback');
+    const submitFeedbackBtn = document.getElementById('submit-feedback-btn');
+    const feedbackText = document.getElementById('feedback-text');
+    const feedbackStatus = document.getElementById('feedback-status');
+    let currentFeedbackId = null;
+
+    window.openCommentModal = function(id) {
+        currentFeedbackId = id;
+        feedbackText.value = '';
+        feedbackStatus.style.display = 'none';
+        feedbackModal.classList.add('active');
+    };
+
+    closeFeedback.addEventListener('click', () => {
+        feedbackModal.classList.remove('active');
+    });
+
+    feedbackModal.addEventListener('click', (e) => {
+        if (e.target === feedbackModal) {
+            feedbackModal.classList.remove('active');
+        }
+    });
+
+    // API Call to Google Apps Script
+    function sendToGoogleSheet(id, action, value = '') {
+        if (!GAS_WEB_APP_URL) {
+            console.warn("GAS Web App URL not configured yet.");
+            return Promise.resolve(); // Simulate success if URL is empty
+        }
+        
+        return fetch(GAS_WEB_APP_URL, {
+            method: 'POST',
+            mode: 'no-cors', // Crucial to avoid CORS errors on GitHub Pages
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                id: id,
+                action: action,
+                value: value
+            })
+        });
+    }
+
+    window.approvePost = function(id, btnElement) {
+        btnElement.disabled = true;
+        btnElement.innerHTML = '⏳ Procesando...';
+        
+        sendToGoogleSheet(id, 'Aprobar').then(() => {
+            btnElement.innerHTML = '✅ ¡Aprobado!';
+            btnElement.style.backgroundColor = '#f1f8e9';
+            btnElement.style.color = '#7cb342';
+        }).catch(err => {
+            console.error('Error:', err);
+            btnElement.disabled = false;
+            btnElement.innerHTML = '❌ Error. Reintentar';
+        });
+    };
+
+    submitFeedbackBtn.addEventListener('click', () => {
+        const comment = feedbackText.value.trim();
+        if (!comment) return;
+
+        submitFeedbackBtn.disabled = true;
+        submitFeedbackBtn.innerHTML = 'Enviando...';
+        
+        sendToGoogleSheet(currentFeedbackId, 'Comentar', comment).then(() => {
+            feedbackStatus.style.display = 'block';
+            feedbackStatus.style.color = 'var(--accent-green)';
+            feedbackStatus.innerText = '✅ Comentario enviado con éxito';
+            submitFeedbackBtn.disabled = false;
+            submitFeedbackBtn.innerHTML = 'Enviar Comentario';
+            setTimeout(() => {
+                feedbackModal.classList.remove('active');
+            }, 1500);
+        }).catch(err => {
+            feedbackStatus.style.display = 'block';
+            feedbackStatus.style.color = 'red';
+            feedbackStatus.innerText = '❌ Error al enviar. Intenta de nuevo.';
+            submitFeedbackBtn.disabled = false;
+            submitFeedbackBtn.innerHTML = 'Enviar Comentario';
+        });
     });
 
     // Check login state
@@ -125,7 +214,11 @@ document.addEventListener('DOMContentLoaded', () => {
             const tipo = row['Tipo de Contenido'] || 'Post';
             const copy = row['Copy para Redes Sociales (FB/IG)'] || 'Sin texto';
             const visualDesc = row['Descripción del Contenido Gráfico'] || 'Imagen no disponible';
+            const id = row['ID'] || row['Id'] || row['id'] || (fecha + '-' + objetivo).replace(/\s+/g, ''); // Fallback to combined string if ID column is missing
+            const estadoActual = row['Estado'] || row['estado'] || '';
             
+            const isAprobado = estadoActual.toLowerCase().includes('aprobado');
+
             // Buscar la URL de la imagen en posibles columnas nuevas
             const rawUrl = row['URL Imagen'] || row['Link de Imagen'] || row['Imagen'] || '';
             const directImgUrl = getDirectImageLink(rawUrl);
@@ -157,6 +250,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 <div class="card-body">
                     <div class="objective">Objetivo: ${objetivo}</div>
                     <div class="copy-text">${copy}</div>
+                    <div class="card-actions">
+                        <button class="btn-approve" onclick="approvePost('${id}', this)" ${isAprobado ? 'disabled' : ''}>
+                            ${isAprobado ? '✅ ¡Aprobado!' : '✅ Aprobar'}
+                        </button>
+                        <button class="btn-comment" onclick="openCommentModal('${id}')">💬 Comentar</button>
+                    </div>
                 </div>
             `;
             calendarGrid.appendChild(card);
