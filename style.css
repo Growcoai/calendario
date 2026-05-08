@@ -223,6 +223,7 @@ h1, h2, h3 {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
     gap: 2.5rem;
+    align-items: start;
 }
 
 /* --- Content Card --- */
@@ -270,12 +271,12 @@ h1, h2, h3 {
 }
 
 .card-image-placeholder {
-    height: 220px;
+    min-height: 220px;
+    height: auto;
     background: linear-gradient(135deg, #f6f8fb 0%, #e9eef5 100%);
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 2rem;
     text-align: center;
     position: relative;
     overflow: hidden;
