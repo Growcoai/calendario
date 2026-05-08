@@ -134,8 +134,8 @@ document.addEventListener('DOMContentLoaded', () => {
             if (directImgUrl) {
                 // Si hay URL, mostrar la imagen con boton de ampliar
                 mediaHTML = `
-                    <div style="position: relative; width: 100%; display: flex; align-items: center; justify-content: center; background: transparent;">
-                        <img src="${directImgUrl}" alt="Contenido Visual" style="width: 100%; height: auto; display: block; border-radius: 0;" onerror="this.onerror=null; this.outerHTML='<div style=\\'padding:2rem; text-align:center; color:var(--accent-blue);\\'><p>⚠️</p><p style=\\'font-size:0.85rem;\\'>Imagen no disponible o sin permisos</p></div>';">
+                    <div class="image-wrapper">
+                        <img class="post-img" src="${directImgUrl}" alt="Contenido Visual" onerror="this.onerror=null; this.outerHTML='<div style=\\'padding:2rem; text-align:center; color:var(--accent-blue);\\'><p>⚠️</p><p style=\\'font-size:0.85rem;\\'>Imagen no disponible o sin permisos</p></div>';">
                         <button class="fullscreen-btn" onclick="openFullscreen('${directImgUrl}')" title="Ver en pantalla completa">
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg>
                         </button>
