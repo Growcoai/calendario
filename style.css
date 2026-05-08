@@ -48,8 +48,24 @@ h1, h2, h3 {
 
 /* --- Login Screen --- */
 #login-screen {
+    position: relative;
+    overflow: hidden;
     justify-content: center;
     align-items: center;
+}
+
+#login-bg-image {
+    position: absolute;
+    top: -5%;
+    left: -5%;
+    width: 110%;
+    height: 110%;
+    background-image: url('12.png');
+    background-size: cover;
+    background-position: center;
+    filter: blur(8px);
+    z-index: -1;
+    transition: transform 0.1s ease-out;
 }
 
 .glass-card {
@@ -322,5 +338,80 @@ h1, h2, h3 {
     .login-card {
         padding: 2.5rem 1.5rem;
         max-width: 90%;
-    }
+}
+
+/* --- Fullscreen Button & Modal --- */
+.fullscreen-btn {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    background: rgba(4, 8, 21, 0.6);
+    color: var(--white);
+    border: none;
+    border-radius: 50%;
+    width: 44px;
+    height: 44px;
+    cursor: pointer;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.3s, transform 0.3s;
+    backdrop-filter: blur(4px);
+    z-index: 2;
+}
+
+.fullscreen-btn:hover {
+    background: var(--accent-blue);
+    transform: scale(1.1);
+}
+
+.modal {
+    display: none; 
+    position: fixed; 
+    z-index: 1000; 
+    left: 0;
+    top: 0;
+    width: 100%; 
+    height: 100%; 
+    background-color: rgba(4, 8, 21, 0.85); 
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    align-items: center;
+    justify-content: center;
+}
+
+.modal.active {
+    display: flex;
+}
+
+.modal-content {
+    max-width: 90%;
+    max-height: 90vh;
+    object-fit: contain;
+    border-radius: 12px;
+    box-shadow: 0 0 30px rgba(0,0,0,0.5);
+    animation: zoomIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes zoomIn {
+    from {transform: scale(0.9); opacity: 0;}
+    to {transform: scale(1); opacity: 1;}
+}
+
+.close-modal {
+    position: absolute;
+    top: 25px;
+    right: 40px;
+    color: var(--white);
+    font-size: 40px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: color 0.3s;
+    z-index: 1001;
+}
+
+.close-modal:hover,
+.close-modal:focus {
+    color: var(--accent-green);
 }

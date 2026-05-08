@@ -14,6 +14,36 @@ document.addEventListener('DOMContentLoaded', () => {
     // Google Sheets CSV Export URL
     const SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/1TznppsHvwjgG23XZCQSRasZIK3sXt_Di/export?format=csv';
 
+    // Hover animation for login background
+    const loginBg = document.getElementById('login-bg-image');
+    if (loginScreen && loginBg) {
+        loginScreen.addEventListener('mousemove', (e) => {
+            const x = (window.innerWidth / 2 - e.pageX) / 50;
+            const y = (window.innerHeight / 2 - e.pageY) / 50;
+            loginBg.style.transform = `translate(${x}px, ${y}px) scale(1.05)`;
+        });
+    }
+
+    // Modal logic
+    const modal = document.getElementById('image-modal');
+    const modalImg = document.getElementById('modal-img');
+    const closeModal = document.getElementById('close-modal');
+
+    window.openFullscreen = function(url) {
+        modal.classList.add('active');
+        modalImg.src = url;
+    };
+
+    closeModal.addEventListener('click', () => {
+        modal.classList.remove('active');
+    });
+
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+            modal.classList.remove('active');
+        }
+    });
+
     // Check login state
     if (sessionStorage.getItem('isLoggedIn') === 'true') {
         showDashboard();
@@ -102,8 +132,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
             let mediaHTML = '';
             if (directImgUrl) {
-                // Si hay URL, mostrar la imagen ocupando todo el espacio, con fallback de error
-                mediaHTML = `<img src="${directImgUrl}" alt="Contenido Visual" style="width: 100%; height: 100%; object-fit: cover; border-radius: 0;" onerror="this.onerror=null; this.outerHTML='<div style=\\'padding:2rem; text-align:center; color:var(--accent-blue);\\'><p>⚠️</p><p style=\\'font-size:0.85rem;\\'>Imagen no disponible o sin permisos públicos</p></div>';">`;
+                // Si hay URL, mostrar la imagen con boton de ampliar
+                mediaHTML = `
+                    <div style="position: relative; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; background: #e0eafc;">
+                        <img src="${directImgUrl}" alt="Contenido Visual" style="width: 100%; height: 100%; object-fit: contain; border-radius: 0;" onerror="this.onerror=null; this.outerHTML='<div style=\\'padding:2rem; text-align:center; color:var(--accent-blue);\\'><p>⚠️</p><p style=\\'font-size:0.85rem;\\'>Imagen no disponible o sin permisos</p></div>';">
+                        <button class="fullscreen-btn" onclick="openFullscreen('${directImgUrl}')" title="Ver en pantalla completa">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg>
+                        </button>
+                    </div>
+                `;
             } else {
                 // Si no hay URL, mostrar la descripción en texto
                 mediaHTML = `<p>📸 ${visualDesc}</p>`;

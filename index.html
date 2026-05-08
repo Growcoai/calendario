@@ -11,6 +11,7 @@
 <body>
     <!-- Pantalla de Login -->
     <div id="login-screen" class="screen active">
+        <div id="login-bg-image"></div>
         <div class="glass-card login-card">
             <img src="logo.png" alt="Growco Logo" class="logo" onerror="this.src='https://via.placeholder.com/200x60?text=Growco';">
             <h2>Acceso Privado</h2>
@@ -43,6 +44,12 @@
                 <!-- Cards renderizadas dinámicamente -->
             </div>
         </main>
+    </div>
+
+    <!-- Fullscreen Image Modal -->
+    <div id="image-modal" class="modal">
+        <span class="close-modal" id="close-modal">&times;</span>
+        <img class="modal-content" id="modal-img">
     </div>
 
     <script src="script.js"></script>
