@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Growco | Calendario de Contenido</title>
-    <link rel="stylesheet" href="style.css?v=6">
+    <link rel="stylesheet" href="style.css?v=7">
     <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
 </head>
@@ -33,8 +33,13 @@
     <!-- Pantalla del Dashboard -->
     <div id="dashboard-screen" class="screen">
         <header class="dashboard-header">
-            <img src="logo.png" alt="Growco Logo" class="header-logo" onerror="this.src='https://via.placeholder.com/150x45?text=Growco';">
-            <h1>Calendario de Contenidos</h1>
+            <div class="brand">
+                <img src="llanteca.png" alt="Llanteca Logo" class="logo" style="max-height: 45px; object-fit: contain;" onerror="this.src='logo.png';">
+                <div class="header-text">
+                    <h1>Calendario de Contenidos</h1>
+                    <p>Aprobaciones y Feedback</p>
+                </div>
+            </div>
             <button id="logout-btn" class="btn-secondary">Cerrar Sesión</button>
         </header>
 
@@ -63,6 +68,6 @@
         </div>
     </div>
 
-    <script src="script.js?v=6"></script>
+    <script src="script.js?v=7"></script>
 </body>
 </html>

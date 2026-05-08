@@ -68,6 +68,13 @@ h1, h2, h3 {
     transition: transform 0.1s ease-out;
 }
 
+/* --- Dashboard Screen Scope (Llanteca Brand) --- */
+#dashboard-screen {
+    --bg-dark: #0a0a0a; /* Black background */
+    --accent-blue: #d32f2f; /* Llanteca Red */
+    --accent-green: #ff5252; /* Lighter Red for hovers */
+}
+
 .glass-card {
     background: var(--glass-bg);
     backdrop-filter: blur(16px);
@@ -386,10 +393,30 @@ h1, h2, h3 {
 
 @media (max-width: 768px) {
     .dashboard-header {
-        flex-direction: column;
-        gap: 1.5rem;
-        padding: 1.5rem;
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 0.8rem;
+        padding: 1rem;
         text-align: center;
+        justify-content: space-between;
+    }
+    .brand {
+        width: 100%;
+        justify-content: center;
+        margin-bottom: 0.5rem;
+    }
+    .brand .logo {
+        height: 35px;
+    }
+    .header-text h1 {
+        font-size: 1.3rem;
+    }
+    .header-text p {
+        font-size: 0.8rem;
+    }
+    .user-profile {
+        width: 100%;
+        justify-content: center;
     }
     .dashboard-content {
         padding: 1.5rem;
