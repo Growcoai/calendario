@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const VALID_PASS = 'Llanteca2026@';
 
     // Google Sheets CSV Export URL
-    const SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/1TznppsHvwjgG23XZCQSRasZIK3sXt_Di/export?format=csv&cachebust';
+    const SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/1w4PJqoHNqdjhYtiMLGX2W3LXaI7sbtLyPrM21creGgU/export?format=csv&cachebust';
     
     // Google Apps Script Web App URL
     const GAS_WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbwoJzrcqLWO_XijDPWMTMNqmlQhkKdAQX0CS3nOc-28dR8N-vvXj3a6KpaxiZukhLyTLA/exec';
