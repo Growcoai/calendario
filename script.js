@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const VALID_PASS = 'Llanteca2026@';
 
     // Google Sheets CSV Export URL
-    const SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/1TznppsHvwjgG23XZCQSRasZIK3sXt_Di/export?format=csv';
+    const SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/1TznppsHvwjgG23XZCQSRasZIK3sXt_Di/export?format=csv&cachebust';
     
     // Google Apps Script Web App URL
     const GAS_WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbwoJzrcqLWO_XijDPWMTMNqmlQhkKdAQX0CS3nOc-28dR8N-vvXj3a6KpaxiZukhLyTLA/exec';
@@ -171,7 +171,7 @@ document.addEventListener('DOMContentLoaded', () => {
         calendarGrid.innerHTML = '';
         loading.style.display = 'block';
 
-        Papa.parse(SHEET_CSV_URL, {
+        Papa.parse(SHEET_CSV_URL + '&t=' + new Date().getTime(), {
             download: true,
             header: true,
             complete: function(results) {
